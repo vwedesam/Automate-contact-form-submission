@@ -3,6 +3,12 @@
 
 ## installation
 
+```shell
+
+pip3 install -r requirements.txt 
+
+```
+
 ## setup
 
 ```shell
