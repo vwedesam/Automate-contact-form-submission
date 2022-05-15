@@ -1,10 +1,16 @@
 from flask import Flask
+from dotenv import load_dotenv
+from .server.main import views
+from .server import config
 
-app = Flask(__name__)
+load_dotenv()  # take environment variables from .env.
 
+app = Flask(__name__, template_folder="./server/templates")
 
-@app.route("/")
-def index():
-    return "<h1>Form Automation</h1>"
+# config Mailer
+config.mailConfig(app)
+
+# register view
+app.register_blueprint(views.main_blueprint)
 
 
