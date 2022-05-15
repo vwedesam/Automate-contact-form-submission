@@ -1,0 +1,30 @@
+
+# Automate Contact Form Submission
+
+## installation
+
+## setup
+
+```shell
+
+export FLASK_ENV=development
+
+export FLASK_APP=automation.main
+
+```
+
+## run App
+
+```shell
+
+flask run --host=0.0.0.0
+
+```
+
+## run celery worker
+
+```shell
+
+celery --app automation.server.tasks.celery worker --loglevel=info
+
+```
