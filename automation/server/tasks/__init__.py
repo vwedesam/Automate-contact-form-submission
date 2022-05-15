@@ -1,7 +1,9 @@
 import os
 import time
-
+from dotenv import load_dotenv
 from celery import Celery
+
+load_dotenv()  # take environment variables from .env.
 
 celery = Celery(__name__)
 celery.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379")
