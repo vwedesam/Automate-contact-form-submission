@@ -16,37 +16,33 @@ class AutomateForm:
 
         self.driver = webdriver.Chrome(executable_path=PATH, options=chrome_options)
         self.driver.get(url)
+        self.name_field = None
 
         time.sleep(300)
 
-    def find_and_set_field(self, name, alt_name, value):
+    def find_and_set_field(self, name, value, alt_name):
 
         present = False
-
+     
         # find field by name, label, placeholder
-
         try:
-
+            self.findByName(name)
             present = True
         except Exception as e:
             print(e)
 
     def findByName(self, name):
-        name_field = self.driver.find_element(by=By.NAME, value=name)
-        pass
+        self.name_field = self.driver.find_element(by=By.NAME, value=name)
 
     def findById(self, name):
-        name_field = self.driver.find_element(by=By.ID, value=name)
-        pass
+        self.name_field = self.driver.find_element(by=By.ID, value=name)
 
-    def searchByPlaceholder(self, name, alt_name):
+    def searchByPlaceholder(self, name):
         place_holder_xpath = f"//input[@placeholder={name}]"
-        name_field = self.driver.find_element(by=By.XPATH, place_holder_xpath)
+        self.name_field = self.driver.find_element(by=By.XPATH, place_holder_xpath)
 
-    def findByLabel(self, name, value):
-        name_field = self.driver.find_element(by=By.ID, value=name)
-        return True
-
+    def findByLabel(self, name):
+        self.name_field = self.driver.find_element(by=By.ID, value=name)
 
     def submit_btn(self):
 
