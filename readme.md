@@ -34,3 +34,8 @@ flask run --host=0.0.0.0
 celery --app automation.server.tasks.celery worker --loglevel=info
 
 ```
+## start server
+
+```shell
+run start_server.sh
+```
