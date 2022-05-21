@@ -1,3 +1,6 @@
+import time
+
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -40,14 +43,13 @@ class AutomateForm(Base):
             except Exception as e:
                 print(e)
 
-        # if element was found/ exist
+        # if element was found/exist
         if present and self.name_field is not None:
             self.name_field.send_keys(value)
 
     def find_email_and_set_field(self, value, alt_name):
 
         present = False
-        # element_func = [self.findByName, self.findById, self.searchByPlaceholder]
         element_search_func = [
             self.findByName,
             self.searchByPlaceholder,
@@ -105,7 +107,8 @@ class AutomateForm(Base):
         pass
 
     def select_value_in_selectBox(self):
-        pass
+        select = Select(self.driver.find_element(By.TAG_NAME, 'select'))
+        select.select_by_index(1)
 
     def check_input_boxes(self):
         pass
@@ -118,3 +121,4 @@ class AutomateForm(Base):
 
     def solve_robot_captcha(self):
         pass
+
