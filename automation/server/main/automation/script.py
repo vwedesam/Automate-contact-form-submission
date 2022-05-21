@@ -107,8 +107,9 @@ class AutomateForm(Base):
         pass
 
     def select_value_in_selectBox(self):
-        select = Select(self.driver.find_element(By.TAG_NAME, 'select'))
-        select.select_by_index(1)
+        get_all_select_tags = self.driver.find_elements(By.TAG_NAME, 'select')
+        for _select in get_all_select_tags:
+            _ = Select(_select).select_by_index(1)
 
     def check_input_boxes(self):
         pass
