@@ -1,55 +1,120 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import time
+from .base import Base
 
 
-class AutomateForm:
+class AutomateForm(Base):
 
-    def __init__(self, PATH, url, headless=False):
-
-        chrome_options = Options()
-
-        if headless:
-            chrome_options.set_headless()
-
-        self.driver = webdriver.Chrome(executable_path=PATH, options=chrome_options)
-        self.driver.get(url)
-        self.name_field = None
-
-        time.sleep(300)
+    def waitForTitle(self):
+        xpath = "//title"
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, xpath))
+            )
+        except Exception as e:
+            print(e)
 
     def find_and_set_field(self, name, value, alt_name):
 
         present = False
-     
+        # element_func = [self.findByName, self.findById, self.searchByPlaceholder]
+        element_search_func = [
+            self.findByName,
+            self.searchByPlaceholder,
+            self.searchByPlaceholderCapitalized,
+            self.searchByPlaceholderUpperCase,
+            self.searchByNameString,
+            self.searchByNameStringCapitalized,
+            self.searchByNameStringUpperCase,
+            self.findById,
+            self.findByIdCapitalize
+        ]
+
         # find field by name, label, placeholder
-        try:
-            self.findByName(name)
-            present = True
-        except Exception as e:
-            print(e)
+        for elem in element_search_func:
+            try:
+                if elem(name):
+                    present = True
+                    break
+            except Exception as e:
+                print(e)
 
-    def findByName(self, name):
-        self.name_field = self.driver.find_element(by=By.NAME, value=name)
+        # if element was found/ exist
+        if present and self.name_field is not None:
+            self.name_field.send_keys(value)
 
-    def findById(self, name):
-        self.name_field = self.driver.find_element(by=By.ID, value=name)
+    def find_email_and_set_field(self, value, alt_name):
 
-    def searchByPlaceholder(self, name):
-        place_holder_xpath = f"//input[@placeholder={name}]"
-        self.name_field = self.driver.find_element(by=By.XPATH, place_holder_xpath)
+        present = False
+        # element_func = [self.findByName, self.findById, self.searchByPlaceholder]
+        element_search_func = [
+            self.findByName,
+            self.searchByPlaceholder,
+            self.searchByPlaceholderCapitalized,
+            self.findByTypeEmail,
+            self.findByNameEmail,
+            self.findByNameEmailCapitalize,
+            self.findById,
+            self.findByIdCapitalize
+        ]
 
-    def findByLabel(self, name):
-        self.name_field = self.driver.find_element(by=By.ID, value=name)
+        # find field by name, label, placeholder
+        for elem in element_search_func:
+            try:
+                if elem('email'):
+                    present = True
+                    break
+            except Exception as e:
+                print(e)
 
-    def submit_btn(self):
+        # if element was found/ exist
+        if present and self.name_field is not None:
+            self.name_field.send_keys(value)
 
-        button = self.driver.find_element(by=By.XPATH, "//input[@type='submit']")
-        button.click()
+    def find_messaage_box_and_set_field(self, value, alt_name):
 
-        # print(form.text)
-        # name.send_keys(first_name)
-        # name.send_keys(Keys.RETURN)
-        # driver.implicitly_wait(5)
+        names = ['message', 'comments', 'questions']
+        present = False
+        # element_func = [self.findByName, self.findById, self.searchByPlaceholder]
+        element_search_func = [
+            self.searchByPlaceholder,
+            self.searchByPlaceholderCapitalized,
+            self.searchByPlaceholderUpperCase,
+            self.findByTextAreas,
+            self.searchByNameString,
+            self.searchByNameStringCapitalized,
+            self.searchByNameStringUpperCase,
+        ]
+
+        # find field by name, label, placeholder
+        for name in names:
+            for elem in element_search_func:
+                try:
+                    if elem(name):
+                        present = True
+                        break
+                except Exception as e:
+                    print(e)
+
+        # if element was found/ exist
+        if present and self.name_field is not None:
+            self.name_field.send_keys(value)
+
+    def set_other_text_fields(self):
+        pass
+
+    def select_value_in_selectBox(self):
+        pass
+
+    def check_input_boxes(self):
+        pass
+
+    def radio_input_boxes(self):
+        pass
+
+    def solve_text_captcha(self):
+        pass
+
+    def solve_robot_captcha(self):
+        pass
