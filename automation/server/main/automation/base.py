@@ -25,9 +25,6 @@ class Base:
         self.name_field = self.driver.find_element(by=By.NAME, value=name)
         return True
 
-    # def find_by_tag_name(self, name: str) -> bool:
-    #     self.driver.find_element(By.TAG_NAME, name)
-    #
     def findByTextAreas(self, name):
         print('find textArea ...')
         xpath = f"//textarea"

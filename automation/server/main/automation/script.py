@@ -74,8 +74,7 @@ class AutomateForm(Base):
         if present and self.name_field is not None:
             self.name_field.send_keys(value)
 
-    def find_messaage_box_and_set_field(self, value, alt_name):
-
+    def find_message_box_and_set_field(self, value, alt_name):
         names = ['message', 'comments', 'questions']
         present = False
         # element_func = [self.findByName, self.findById, self.searchByPlaceholder]
@@ -104,18 +103,39 @@ class AutomateForm(Base):
             self.name_field.send_keys(value)
 
     def set_other_text_fields(self):
-        pass
+        ...     # What I have tried
+        # all_input = self.driver.find_elements_by_xpath('//form//input')
+        # print(all_input)
+        # for field in all_input:
+        #     if field.get_attribute("type") not in ["hidden", "Hidden", "HIDDEN"]:
+        #         value = field.get_attribute("value")
+        #         print(field, type(value))
+        #         if value == "":
+        #             print(value, "--------")
+        #             field.clear()
+        #             field.send_keys("wisdom")
 
-    def select_value_in_selectBox(self):
-        get_all_select_tags = self.driver.find_elements(By.TAG_NAME, 'select')
-        for _select in get_all_select_tags:
-            _ = Select(_select).select_by_index(1)
+    def select_value_in_select_box(self):
+        try:
+            for _select in self.driver.find_elements(By.TAG_NAME, 'select'):
+                Select(_select).select_by_index(1)
+        except Exception as err:
+            print(err)
 
     def check_input_boxes(self):
-        pass
+        try:
+            checks, counts = self.driver.find_elements(By.XPATH, "//input[@type='checkbox']"), 0
+            for check in checks:
+                if counts == 1:
+                    break       # Avoid clicking all checkbox but just 1
+                check.click()
+                counts += 1
+        except Exception as err:
+            print(err)
 
     def radio_input_boxes(self):
-        pass
+        for radio in self.driver.find_elements(By.XPATH, "//input[@type='radio']"):
+            radio.click()
 
     def solve_text_captcha(self):
         pass

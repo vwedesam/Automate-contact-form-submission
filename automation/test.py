@@ -22,12 +22,14 @@ PATH = "./chromedriver"
 # url = "https://pittstrailers.com/contact-us/" #captcha
 # url = "https://www.ncralaska.com/contact-us" #captcha
 # url = "https://www.alaska.co.nz/contact-us"
-url = "https://www.graniteconstruction.com/company/contact-us" #re-visit
+# url = "https://www.graniteconstruction.com/company/contact-us" #re-visit
 # url = "https://alaskastructures.com/contacts/" #re-visit
 # url = "https://www.hccontractors.net/contact/" # re-visit -captcha -- and form
 # url = "https://www.drakeconstruction.net/contact-us/" #re-visit
 # url = "https://www.associatedmetalcast.com/contact/"
-
+# url = "https://www.challenge-mfg.com/contact-us/"
+# url = "https://www.challenge-mfg.com/contact-us/"
+url = "http://localhost:5000"
 
 # business.etowahchamber.org/list/member/honda-manufacturing-of-alabama-llc-6822
 # re-visit
@@ -54,12 +56,11 @@ form = AutomateForm(PATH, url)
 
 form.waitForTitle()
 
-firstname = 'sam'
+firstname = 'Nwa'
 lastname = 'wisdom'
 phone = "+234080000000"
 email = "sam@gmail.com"
 message = "message, text, quest comment"
-form.select_value_in_selectBox()
 
 
 form.find_and_set_field('name', f"{lastname} {firstname}", '_email')
@@ -72,9 +73,12 @@ form.find_and_set_field('phone', phone, '_phone')
 
 form.find_email_and_set_field(email, '_email')
 
-form.find_messaage_box_and_set_field(message, '_message')
+form.find_message_box_and_set_field(message, '_message')
 
-# form.solve_robot_captcha()
+form.select_value_in_select_box()
 
+form.check_input_boxes()
+
+form.radio_input_boxes()
 
 time.sleep(100)
