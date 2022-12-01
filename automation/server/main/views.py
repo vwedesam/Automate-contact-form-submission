@@ -9,8 +9,19 @@ main_blueprint = Blueprint('auth', __name__, url_prefix='/')
 
 @main_blueprint.route("/", methods=["POST", "GET"])
 def home():
-
     return render_template('form.html')
+
+
+# Get form inputs
+@main_blueprint.route("/automate", methods=["POST"])
+def automate_task():
+    first_name = request.form.get("name")
+    surname = request.form.get("surname")
+    email = request.form.get("email")
+    need = request.form.get("need")
+    message = request.form.get("message")
+
+    return f"AUTOMATING... {first_name, surname, email, need, message}"
 
 
 @main_blueprint.route("/tasks", methods=["POST"])

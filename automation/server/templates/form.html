@@ -24,7 +24,7 @@
                     <div class="card-body bg-light">
 
                         <div class="container">
-                            <form id="contact-form" role="form">
+                            <form id="contact-form" role="form" method="POST" action="{{ url_for('auth.automate_task') }}">
                                 <div class="controls">
                                     <div class="row">
                                         <div class="col-md-6">
