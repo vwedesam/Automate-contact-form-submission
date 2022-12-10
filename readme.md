@@ -35,6 +35,8 @@ run start_server.sh
 py automation/test.py
 ```
 
+# Captcha Automation Coming Soon !!!
+
 # Celery integration Coming Soon !!!
 ## run celery worker
 ```shell
