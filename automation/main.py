@@ -1,7 +1,7 @@
 from flask import Flask
 from dotenv import load_dotenv
-from .server.main import views
-from .server import config
+from .src.main import views
+from .src import config
 
 load_dotenv()  # take environment variables from .env.
 
