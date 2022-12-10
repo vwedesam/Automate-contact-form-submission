@@ -1,81 +1,42 @@
 
 # Automate Contact Form Submission
+The `scripts.py` contains re-usable class methods that makes form automation easy 
+
+## Setup
+1. create a virtual env
+2. add the required env vars
+3. download chromedriver (https://chromedriver.chromium.org/downloads)
+
+`chromedriver version should be the same as the chrome installed on your PC `
 
 ## installation
 
 ```shell
-
 pip3 install -r requirements.txt 
-
 ```
 
-## setup
-
+## ENV
 ```shell
-
+export FORM_URL="http://localhost:5000"
 export FLASK_ENV=development
-
 export FLASK_APP=automation.main
-
 ```
 
 ## run App
-
+`This gives you a form to test the automation scripts`
 ```shell
-
 flask run --host=0.0.0.0
-
-```
-
-## run celery worker
-
-```shell
-
-celery --app automation.server.tasks.celery worker --loglevel=info
-
-```
-## start server
-
-```shell
+/// shell
 run start_server.sh
 ```
 
-## PROD SCRIPT
+## RUN TEST SCRIPT
 ```shell
+py automation/test.py
+```
 
-from server.main.automation.script import AutomateForm
-
-
-PATH = "./chromedriver.exe"
-url = ""
-
-form = AutomateForm(PATH, url)
-
-form.waitForTitle()
-
-firstname = 'sam'
-lastname = 'wisdom'
-phone = ""
-email = ""
-message = ""
-
-form.find_and_set_field('name', f"{lastname} {firstname}", '_email')
-
-form.find_and_set_field('fullname', f"{lastname} {firstname}", '_email')
-
-form.find_and_set_field('first', f"{firstname}", '_email')
-
-form.find_and_set_field('firstname', f"{firstname}", '_email')
-
-form.find_and_set_field('lastname', f"{lastname}", '_email')
-
-form.find_and_set_field('last', f"{lastname}", '_email')
-
-form.find_and_set_field('phone', phone, '_phone')
-
-form.find_email_and_set_field(email, '_email')
-
-form.find_messaage_box_and_set_field(message, '_message')
-
-
+# Celery integration Coming Soon !!!
+## run celery worker
+```shell
+celery --app automation.server.tasks.celery worker --loglevel=info
 ```
