@@ -1,84 +1,51 @@
 import time
-
-from server.main.automation.script import AutomateForm
-
+import os
+from scripts import AutomateForm
+import unittest
 
 PATH = "./chromedriver"
 
-# url = "https://www.mni.net/contact/"
-# url = "http://aerenoutsourcing.com/contact-us.html"
-# url = "https://www.nacsllc.org/contact"
-# url = "https://hoar.com/contact-alabama/"
-# url = "https://www.cefatradetraining.org/contact/" #re-visit
-# url = "https://www.beckumlaw.com/contact-us.html"
-# url = "https://www.boealabama.com/pages/resources/contact.php"
-# url = "https://brookstonerestoration.com/contact-us/"
-# url = "https://caddell.com/contact-us/" # re visit
-# url = "https://calldixie.com/contact/" # select
-# url = "https://www.bidnet.com/contact-us" # re-visit
-# url = "https://www.islandpestcontrol.net/"
-# url = "https://business.manufacturealabama.org/contact/" #re-visit
-# url = "https://www.tyonek.com/contact-us/"
-# url = "https://pittstrailers.com/contact-us/" #captcha
-# url = "https://www.ncralaska.com/contact-us" #captcha
-# url = "https://www.alaska.co.nz/contact-us"
-# url = "https://www.graniteconstruction.com/company/contact-us" #re-visit
-# url = "https://alaskastructures.com/contacts/" #re-visit
-# url = "https://www.hccontractors.net/contact/" # re-visit -captcha -- and form
-# url = "https://www.drakeconstruction.net/contact-us/" #re-visit
-# url = "https://www.associatedmetalcast.com/contact/"
-# url = "https://www.challenge-mfg.com/contact-us/"
-# url = "https://www.challenge-mfg.com/contact-us/"
-url = "http://localhost:5000"
-
-# business.etowahchamber.org/list/member/honda-manufacturing-of-alabama-llc-6822
-# re-visit
-# https://www.briceenvironmental.com/contact-us/
-# https://www.tbi-construction.com/contact-us/
-# https://uicalaska.com/contact-us/office-contacts-and-locations/
-# https://www.shapecorp.com/contactform/
-# https://www.horiba.com/int/contact/contact-form/
-# https://www.phillipsmfg.com/contact-phillips/
-# https://avantilipids.com/contact-us
-# https://www.associatedmetalcast.com/contact/
-# https://www.vulcan-group.com/contact-us/
-#  https://sbslp.com/contact-us/
-# https://www.polsonlawfirm.com/contact-us.html
-# https://www.tstech.com/contact.php
-# https://www.ghafari.com/about/contact
-# https://www.dynamicmanufacturinginc.com/contact-us/
-# https://www.gwsys.net/contact/
-# https://www.palletchief.com/contact-us
-# https://www.challenge-mfg.com/contact-us/
+url = os.getenv('FORM_URL') or "http://localhost:5000"
 
 
-form = AutomateForm(PATH, url)
+class TestAutomateContactForm(unittest.TestCase):
 
-form.waitForTitle()
+    def setUp(self):
+        self.firstname = 'Nwa'
+        self.lastname = 'wisdom'
+        self.phone = "+234080000000"
+        self.email = "sam@gmail.com"
+        self.other = "others"
+        self.message = "message, text, quest comment"
 
-firstname = 'Nwa'
-lastname = 'wisdom'
-phone = "+234080000000"
-email = "sam@gmail.com"
-message = "message, text, quest comment"
+        self.form = AutomateForm(PATH, url)
+
+        self.form.waitForTitle()
+
+    def test_preFillInputs(self):
+
+        self.form.find_and_set_field('name', f"{self.lastname} {self.firstname}", '_email')
+
+        self.form.find_and_set_field('first', f"{self.firstname}", '_email')
+
+        self.form.find_and_set_field('last', f"{self.lastname}", '_email')
+
+        self.form.find_and_set_field('phone', self.phone, '_phone')
+
+        self.form.find_email_and_set_field(self.email, '_email')
+
+        self.form.find_message_box_and_set_field(self.message, '_message')
+
+        self.form.select_value_in_select_box()
+
+        self.form.check_input_boxes()
+
+        self.form.radio_input_boxes()
+
+        self.form.find_empty_inputs_and_set_value()
+
+        time.sleep(100)
 
 
-form.find_and_set_field('name', f"{lastname} {firstname}", '_email')
-
-form.find_and_set_field('first', f"{firstname}", '_email')
-
-form.find_and_set_field('last', f"{lastname}", '_email')
-
-form.find_and_set_field('phone', phone, '_phone')
-
-form.find_email_and_set_field(email, '_email')
-
-form.find_message_box_and_set_field(message, '_message')
-
-form.select_value_in_select_box()
-
-form.check_input_boxes()
-
-form.radio_input_boxes()
-
-time.sleep(100)
+if __name__ == '__main__':
+    unittest.main()
